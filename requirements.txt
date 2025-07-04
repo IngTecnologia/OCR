@@ -1,0 +1,11 @@
+numpy<2.0.0
+easyocr==1.7.0
+customtkinter==5.2.2
+Pillow>=10.0.0
+opencv-python==4.8.1.78
+torch==2.1.0+cu121
+torchvision==0.16.0+cu121
+torchaudio==2.1.0+cu121
+tkinterdnd2==0.3.0
+reportlab==4.0.7
+python-docx==0.8.11
