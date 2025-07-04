@@ -14,6 +14,14 @@ from reportlab.lib.pagesizes import letter
 from docx import Document
 import json
 
+# Fix for Pillow compatibility
+try:
+    # For older versions of Pillow
+    if not hasattr(Image, 'ANTIALIAS'):
+        Image.ANTIALIAS = Image.Resampling.LANCZOS
+except AttributeError:
+    pass
+
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
@@ -193,11 +201,10 @@ class OCRApp:
         try:
             img = Image.open(image_data['path'])
             img.thumbnail((400, 400), Image.Resampling.LANCZOS)
-            # Use CTkImage instead of PhotoImage to avoid warnings
-            actual_size = img.size
-            ctk_image = ctk.CTkImage(light_image=img, dark_image=img, size=actual_size)
-            self.image_label.configure(image=ctk_image, text="")
-            self.image_label.image = ctk_image
+            # Convert to PhotoImage for compatibility
+            photo = ImageTk.PhotoImage(img)
+            self.image_label.configure(image=photo, text="")
+            self.image_label.image = photo
         except Exception as e:
             self.image_label.configure(text=f"Error al cargar imagen: {str(e)}")
         
